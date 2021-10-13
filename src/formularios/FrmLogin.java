@@ -38,6 +38,8 @@ public class FrmLogin extends javax.swing.JFrame {
         btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(400, 300));
+        setMinimumSize(new java.awt.Dimension(400, 300));
 
         jLabel1.setText("Usuario");
 
@@ -138,7 +140,7 @@ public class FrmLogin extends javax.swing.JFrame {
                     .addContainerGap(50, Short.MAX_VALUE)))
         );
 
-        setSize(new java.awt.Dimension(418, 309));
+        setSize(new java.awt.Dimension(400, 300));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -151,7 +153,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
         UsuarioClass usuario = new UsuarioClass();
 
-        boolean login = usuario.validarUsuario(usuarioTxt.getText(), passTxt.getText());
+        boolean login = usuario.validarUsuario(usuarioTxt.getText(), String.valueOf(passTxt.getPassword()));
 
         if(login){
             this.dispose();

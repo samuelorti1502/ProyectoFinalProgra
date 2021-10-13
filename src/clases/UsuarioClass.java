@@ -21,9 +21,9 @@ import javax.swing.JOptionPane;
  */
 public class UsuarioClass {
     private String usuario;
-    public String email;
-    public String contraseña1;
-    public String contraseña2;
+    private String codigo;
+    private String contraseña1;
+    private String contraseña2;
 
     public String claveMurci(String texto) {
         texto = texto.replace('m', '0');
@@ -56,7 +56,7 @@ public class UsuarioClass {
 
             FileWriter archivo = new FileWriter(file.getAbsoluteFile(), true);
 
-            String texto = claveMurci(getUsuario()) + "," + claveMurci(email) + "," + claveMurci(contraseña1);
+            String texto =  getCodigo() + "," + claveMurci(getUsuario()) + "," + claveMurci(getContraseña1());
 
             PrintWriter imprimir = new PrintWriter(archivo);
             imprimir.println(texto);
@@ -78,7 +78,7 @@ public class UsuarioClass {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 u = data.split(",");
-                if(u[0].equals(claveMurci(usuario)) && u[2].equals(claveMurci(contraseña))){
+                if(u[1].equals(claveMurci(usuario)) && u[2].equals(claveMurci(contraseña))){
                     isLogin = true;
                     //FrmJuego juego = new FrmJuego();
                     JOptionPane.showMessageDialog(null, "A jugar");
@@ -99,6 +99,30 @@ public class UsuarioClass {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
+    }
+
+    public String getContraseña1() {
+        return contraseña1;
+    }
+
+    public void setContraseña1(String contraseña1) {
+        this.contraseña1 = contraseña1;
+    }
+
+    public String getContraseña2() {
+        return contraseña2;
+    }
+
+    public void setContraseña2(String contraseña2) {
+        this.contraseña2 = contraseña2;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
     
     
