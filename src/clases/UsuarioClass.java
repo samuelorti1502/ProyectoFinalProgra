@@ -24,6 +24,7 @@ public class UsuarioClass {
     private String codigo;
     private String contraseña1;
     private String contraseña2;
+    private String DPI;
 
     public String claveMurci(String texto) {
         texto = texto.replace('m', '0');
@@ -56,7 +57,7 @@ public class UsuarioClass {
 
             FileWriter archivo = new FileWriter(file.getAbsoluteFile(), true);
 
-            String texto =  getCodigo() + "," + claveMurci(getUsuario()) + "," + claveMurci(getContraseña1());
+            String texto =  getCodigo() + "," + getDPI() + "," + claveMurci(getUsuario()) + "," + claveMurci(getContraseña1());
 
             PrintWriter imprimir = new PrintWriter(archivo);
             imprimir.println(texto);
@@ -123,6 +124,14 @@ public class UsuarioClass {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public String getDPI() {
+        return DPI;
+    }
+
+    public void setDPI(String DPI) {
+        this.DPI = DPI;
     }
     
     
