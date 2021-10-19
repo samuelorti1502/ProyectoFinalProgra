@@ -50,14 +50,16 @@ public class UsuarioClass {
         return texto;
     }
 
-    public void nuevoUsuario() {
+    public void nuevoUsuario(String codigo, String nombres, String apellidos, String dpi, String usuario, 
+            String pass1, String pass2) {
         //String usuario, String email, String contraseña1,  String contraseña2){
         try {
             File file = new File("usuarios.txt");
 
             FileWriter archivo = new FileWriter(file.getAbsoluteFile(), true);
 
-            String texto =  getCodigo() + "," + getDPI() + "," + claveMurci(getUsuario()) + "," + claveMurci(getContraseña1());
+            String texto =  codigo + "," + nombres + "," + apellidos + "," + dpi + "," +claveMurci(usuario) + "," + 
+                    claveMurci(pass1) + "," + claveMurci(pass2);
 
             PrintWriter imprimir = new PrintWriter(archivo);
             imprimir.println(texto);
@@ -82,7 +84,7 @@ public class UsuarioClass {
                 if(u[1].equals(claveMurci(usuario)) && u[2].equals(claveMurci(contraseña))){
                     isLogin = true;
                     //FrmJuego juego = new FrmJuego();
-                    JOptionPane.showMessageDialog(null, "A jugar");
+                    //JOptionPane.showMessageDialog(null, "A jugar");
                 }
             }
             myReader.close();

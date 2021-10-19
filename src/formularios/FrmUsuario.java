@@ -11,7 +11,9 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -20,16 +22,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class FrmUsuario extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmUsuario
-     */
-    
     File archivo;
-    
+    private boolean validador;
+    private String mensaje;
+
     public FrmUsuario() {
         initComponents();
-        
-        jLabel4.setVisible(false);
+
+        lblPass2.setVisible(false);
         txtPass2.setVisible(false);
     }
 
@@ -42,6 +42,7 @@ public class FrmUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSeparator1 = new javax.swing.JSeparator();
         PanelMenu = new javax.swing.JPanel();
         lblUMG = new javax.swing.JLabel();
         lblMenu = new javax.swing.JLabel();
@@ -54,15 +55,19 @@ public class FrmUsuario extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblCodigo = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        lblNombres = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        lblApellidos = new javax.swing.JLabel();
+        txtApellidos = new javax.swing.JTextField();
+        lblDPI = new javax.swing.JLabel();
         txtDPI = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        lblPass1 = new javax.swing.JLabel();
         txtPass1 = new javax.swing.JPasswordField();
-        jLabel4 = new javax.swing.JLabel();
+        lblPass2 = new javax.swing.JLabel();
         txtPass2 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -103,7 +108,7 @@ public class FrmUsuario extends javax.swing.JFrame {
                     .addGroup(PanelMenuLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(lblTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(50, Short.MAX_VALUE))))
+                        .addContainerGap(54, Short.MAX_VALUE))))
         );
         PanelMenuLayout.setVerticalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,22 +161,36 @@ public class FrmUsuario extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setLayout(new java.awt.GridLayout(5, 2, 0, 10));
+        jPanel2.setLayout(new java.awt.GridLayout(7, 2, 0, 10));
 
-        jLabel1.setText("Código");
-        jPanel2.add(jLabel1);
+        lblCodigo.setText("Código");
+        jPanel2.add(lblCodigo);
         jPanel2.add(txtCodigo);
 
-        jLabel7.setText("DPI");
-        jPanel2.add(jLabel7);
+        lblNombres.setText("Nombres");
+        jPanel2.add(lblNombres);
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtNombre);
+
+        lblApellidos.setText("Apellidos");
+        jPanel2.add(lblApellidos);
+        jPanel2.add(txtApellidos);
+
+        lblDPI.setText("DPI");
+        jPanel2.add(lblDPI);
         jPanel2.add(txtDPI);
 
-        jLabel2.setText("Usuario");
-        jPanel2.add(jLabel2);
+        lblUsuario.setText("Usuario");
+        jPanel2.add(lblUsuario);
         jPanel2.add(txtUsuario);
 
-        jLabel3.setText("Contraseña");
-        jPanel2.add(jLabel3);
+        lblPass1.setText("Contraseña");
+        jPanel2.add(lblPass1);
 
         txtPass1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -180,8 +199,8 @@ public class FrmUsuario extends javax.swing.JFrame {
         });
         jPanel2.add(txtPass1);
 
-        jLabel4.setText("Confirmar");
-        jPanel2.add(jLabel4);
+        lblPass2.setText("Confirmar");
+        jPanel2.add(lblPass2);
         jPanel2.add(txtPass2);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -189,54 +208,60 @@ public class FrmUsuario extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(lblImage)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(198, 198, 198)
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(51, 51, 51)
+                .addComponent(lblImage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(204, 204, 204)
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblImage)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(lblImage))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(10, 10, 10))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(PanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(PanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(718, 540));
+        setSize(new java.awt.Dimension(718, 726));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -256,11 +281,11 @@ public class FrmUsuario extends javax.swing.JFrame {
                 ImageIcon Img = new ImageIcon(this.archivo.toString());
 
                 Icon icono = new ImageIcon(Img.getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(),
-                    Image.SCALE_DEFAULT));
-            lblImage.setIcon(icono);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al abrir " + ex);
-        }
+                        Image.SCALE_DEFAULT));
+                lblImage.setIcon(icono);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error al abrir " + ex);
+            }
         }
 
         //JOptionPane.showMessageDialog(null, "HOLA", "Seleccion de imagen", JOptionPane.ERROR_MESSAGE);
@@ -275,30 +300,67 @@ public class FrmUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void validarCampos() {
+
+        mensaje = "";
+        setValidador(false);
+
+        if (txtCodigo.getText().equals("")) {
+            mensaje = "El campo " + lblCodigo.getText() + " no puede estar vacio.\n";
+        }
+        if (txtNombre.getText().equals("")) {
+            mensaje += "El campo " + lblNombres.getText() + " no puede estar vacio.\n";
+        }
+        if (txtApellidos.getText().equals("")) {
+            mensaje += "El campo " + lblApellidos.getText() + " no puede estar vacio.\n";
+        }
+        if (txtDPI.getText().equals("")) {
+            mensaje += "El campo " + lblDPI.getText() + " no puede estar vacio.\n";
+        }
+        if (txtUsuario.getText().equals("")) {
+            mensaje += "El campo " + lblUsuario.getText() + " no puede estar vacio.\n";
+        }
+        if (String.valueOf(txtPass1.getPassword()).equals("")) {
+            mensaje += "El campo " + lblPass1.getText() + " no puede estar vacio.\n";
+        }
+
+        if (!mensaje.equals("")) {
+            JOptionPane.showMessageDialog(null, "Error\n\n" + this.mensaje);
+        } else {
+            setValidador(true);
+        }
+
+    }
+
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         UsuarioClass usuario = new UsuarioClass();
 
-        if (String.valueOf(txtPass1.getPassword()).equals(String.valueOf(txtPass2.getPassword()))) {
-            //JOptionPane.showMessageDialog(null, "Son iguales");
-            usuario.setCodigo(txtCodigo.getText());
-            usuario.setDPI(txtDPI.getText());
-            usuario.setUsuario(txtUsuario.getText());
-            usuario.setContraseña1(String.valueOf(txtPass1.getPassword()));
-            usuario.setContraseña2(String.valueOf(txtPass2.getPassword()));
-            usuario.nuevoUsuario();
-            this.dispose();
+        validarCampos();
 
-        } else {
-            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, intente de nuevo");
-            txtPass1.requestFocus();
-            txtPass1.selectAll();
+        if (isValidador()) {
+            if (String.valueOf(txtPass1.getPassword()).equals(String.valueOf(txtPass2.getPassword()))) {
+                //JOptionPane.showMessageDialog(null, "Son iguales");
+                
+                usuario.nuevoUsuario(txtCodigo.getText(), txtDPI.getText(), txtNombre.getText(), txtApellidos.getText(), txtUsuario.getText(),
+                        String.valueOf(txtPass1.getPassword()), String.valueOf(txtPass2.getPassword()));
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, intente de nuevo");
+                txtPass1.requestFocus();
+                txtPass1.selectAll();
+            }
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void txtPass1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPass1KeyReleased
-        jLabel4.setVisible(true);
+        lblPass2.setVisible(true);
         txtPass2.setVisible(true);
     }//GEN-LAST:event_txtPass1KeyReleased
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,24 +401,37 @@ public class FrmUsuario extends javax.swing.JFrame {
     private javax.swing.JPanel PanelMenu;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblApellidos;
+    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblDPI;
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblMenu;
+    private javax.swing.JLabel lblNombres;
+    private javax.swing.JLabel lblPass1;
+    private javax.swing.JLabel lblPass2;
     private javax.swing.JLabel lblReloj;
     private javax.swing.JLabel lblTexto;
     private javax.swing.JLabel lblUMG;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDPI;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JPasswordField txtPass1;
     private javax.swing.JPasswordField txtPass2;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    public boolean isValidador() {
+        return validador;
+    }
+
+    public void setValidador(boolean validador) {
+        this.validador = validador;
+    }
 }
