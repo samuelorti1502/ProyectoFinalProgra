@@ -5,6 +5,23 @@
  */
 package formularios;
 
+import clases.BiciClass;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author Samuel David Ortiz
@@ -12,8 +29,10 @@ package formularios;
 public class FrmBici extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrmBici
+     * Creates new form FrmBici2
      */
+    Path pathOrigen, pathDestino;
+
     public FrmBici() {
         initComponents();
     }
@@ -27,39 +46,150 @@ public class FrmBici extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelTitulo = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        panelContenido = new javax.swing.JPanel();
+        panelImagen = new javax.swing.JPanel();
+        lblImagen = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtCod = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtMarca = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtModelo = new javax.swing.JTextField();
+        panelBotones = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        panelTitulo.setLayout(new java.awt.GridLayout());
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Creación de bicicleta nueva");
+        panelTitulo.add(jLabel5);
+
+        panelImagen.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelImagen.setPreferredSize(new java.awt.Dimension(150, 180));
+
+        lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pinwi.png"))); // NOI18N
+        lblImagen.setToolTipText("Click para seleccionar imagen");
+        lblImagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        lblImagen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImagenMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelImagenLayout = new javax.swing.GroupLayout(panelImagen);
+        panelImagen.setLayout(panelImagenLayout);
+        panelImagenLayout.setHorizontalGroup(
+            panelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panelImagenLayout.setVerticalGroup(
+            panelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+        );
+
+        jLabel3.setText("Código");
+
+        jLabel4.setText("Marca");
+
+        jLabel6.setText("Modelo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 92, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setLayout(new java.awt.GridLayout(3, 2, 10, 10));
+        panelBotones.setLayout(new java.awt.GridLayout(1, 4, 10, 0));
+        panelBotones.add(jLabel2);
 
-        jLabel1.setText("Codigo");
-        jPanel2.add(jLabel1);
+        jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        panelBotones.add(jButton1);
 
-        jTextField1.setText("jTextField1");
-        jPanel2.add(jTextField1);
+        jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        panelBotones.add(jButton2);
+        panelBotones.add(jLabel1);
 
-        jLabel2.setText("Marca");
-        jPanel2.add(jLabel2);
+        javax.swing.GroupLayout panelContenidoLayout = new javax.swing.GroupLayout(panelContenido);
+        panelContenido.setLayout(panelContenidoLayout);
+        panelContenidoLayout.setHorizontalGroup(
+            panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenidoLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(panelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(panelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panelContenidoLayout.setVerticalGroup(
+            panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenidoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
 
-        jTextField2.setText("jTextField2");
-        jPanel2.add(jTextField2);
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,23 +198,80 @@ public class FrmBici extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panelContenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelContenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(418, 309));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            Files.delete(pathDestino);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(FrmBici.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void lblImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenMouseClicked
+        JFileChooser jFileChooser = new JFileChooser();
+        FileNameExtensionFilter formato = new FileNameExtensionFilter("Archivos de imagen", "jpg", "png", "gif");
+
+        jFileChooser.setFileFilter(formato);
+
+        int valor = jFileChooser.showOpenDialog(null);
+
+        if (valor == JFileChooser.APPROVE_OPTION) {
+
+            try {
+                File rutaImagen = jFileChooser.getSelectedFile();
+
+                pathOrigen = Paths.get(rutaImagen.getAbsolutePath());
+                int indice = rutaImagen.getName().lastIndexOf(".");
+                pathDestino = Paths.get("src\\images\\bici\\" + this.txtCod.getText() + rutaImagen.getName().substring(indice));
+                Files.copy(pathOrigen, pathDestino, StandardCopyOption.REPLACE_EXISTING);
+
+                BufferedImage bImagen = ImageIO.read(pathDestino.toFile());
+                Image rImagen = bImagen.getScaledInstance(this.lblImagen.getWidth(), this.lblImagen.getHeight(), Image.SCALE_SMOOTH);
+
+                this.lblImagen.setIcon(new ImageIcon(rImagen));
+
+            } catch (IOException ex) {
+                Logger.getLogger(FrmBici.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmBici.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }//GEN-LAST:event_lblImagenMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        BiciClass biciClass = new BiciClass(Integer.valueOf(this.txtCod.getText()), this.txtMarca.getText(), this.txtModelo.getText());
+
+        biciClass.nuevaBici();
+
+        int n = JOptionPane.showConfirmDialog(null, "Desea ingresar otra bicicleta", "Bici", JOptionPane.YES_NO_OPTION);
+
+        if (n == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(null, "HELLO");
+        } else {
+            this.dispose();
+            new FrmMenu().setVisible(true);
+        }
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -112,6 +299,7 @@ public class FrmBici extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(FrmBici.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -122,11 +310,25 @@ public class FrmBici extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblImagen;
+    private javax.swing.JPanel panelBotones;
+    private javax.swing.JPanel panelContenido;
+    private javax.swing.JPanel panelImagen;
+    private javax.swing.JPanel panelTitulo;
+    private javax.swing.JTextField txtCod;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtModelo;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,0 +1,6 @@
+1,BMX
+5,Trek,Fuel top
+5236,Trek,Slash
+4125,Trek,Ciber
+4125,Trek,Ciber
+74,Shimano,Shi

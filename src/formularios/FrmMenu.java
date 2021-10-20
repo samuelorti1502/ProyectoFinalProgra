@@ -136,8 +136,9 @@ public class FrmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new FrmBici().setVisible(true);
         this.setVisible(false);
+        new FrmBici().setVisible(true);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
