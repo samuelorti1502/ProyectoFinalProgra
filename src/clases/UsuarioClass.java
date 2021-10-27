@@ -81,7 +81,13 @@ public class UsuarioClass {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 u = data.split(",");
-                if(u[1].equals(claveMurci(usuario)) && u[2].equals(claveMurci(contraseña))){
+                
+                /*JOptionPane.showMessageDialog(null, "usuario archivo = " + u[4]);
+                JOptionPane.showMessageDialog(null, "usuario form = " + claveMurci(usuario));
+                JOptionPane.showMessageDialog(null, "clave archivo = " + u[6]);
+                JOptionPane.showMessageDialog(null, "clave form = " + claveMurci(contraseña));*/
+                
+                if(u[4].equals(claveMurci(usuario)) && u[6].equals(claveMurci(contraseña))){
                     isLogin = true;
                     //FrmJuego juego = new FrmJuego();
                     //JOptionPane.showMessageDialog(null, "A jugar");

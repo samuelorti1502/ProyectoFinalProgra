@@ -1,6 +1,12 @@
 package formularios;
 
 import clases.UsuarioClass;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,10 +18,10 @@ public class FrmLogin extends javax.swing.JFrame {
     /**
      * Creates new form FrmLogin
      */
-    
     private String usuario;
 
     public FrmLogin() {
+        archivo();
         initComponents();
     }
 
@@ -144,6 +150,29 @@ public class FrmLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void archivo() {
+
+        File file = new File("usuarios.txt");
+        boolean exists = file.exists();
+
+        if (!exists) {
+            FileWriter archivo;
+            try {
+                archivo = new FileWriter(file.getAbsoluteFile(), true);
+                String texto = 999999 + ",usuario,usuario,1234567890123,1s17249,12345678,12345678";
+
+                PrintWriter imprimir = new PrintWriter(archivo);
+                imprimir.println(texto);
+
+                archivo.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+    }
+
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
 
         this.dispose();
@@ -155,15 +184,16 @@ public class FrmLogin extends javax.swing.JFrame {
 
         boolean login = usuario.validarUsuario(usuarioTxt.getText(), String.valueOf(passTxt.getPassword()));
 
-        if(login){
+        if (login) {
             this.dispose();
-        }else{
+            new FrmMenu().setVisible(true);
+        } else {
             JOptionPane.showMessageDialog(null, "Intente de nuevo");
         }
 
         this.setUsuario(usuarioTxt.getText());
-        
-        new FrmMenu().setVisible(true);
+
+
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
@@ -200,7 +230,7 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
     }
-    
+
     public String getUsuario() {
         return usuario;
     }
