@@ -8,6 +8,8 @@ package formularios;
 import clases.UsuarioClass;
 import java.awt.Image;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -31,6 +33,8 @@ public class FrmUsuario extends javax.swing.JFrame {
 
         lblPass2.setVisible(false);
         txtPass2.setVisible(false);
+        this.txtCodigo.setText(generarCodigo());
+        this.txtNombre.requestFocus();
     }
 
     /**
@@ -165,6 +169,8 @@ public class FrmUsuario extends javax.swing.JFrame {
 
         lblCodigo.setText("Código");
         jPanel2.add(lblCodigo);
+
+        txtCodigo.setEditable(false);
         jPanel2.add(txtCodigo);
 
         lblNombres.setText("Nombres");
@@ -265,6 +271,13 @@ public class FrmUsuario extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private String generarCodigo(){
+        Date date = new Date();
+        SimpleDateFormat DateFor = new SimpleDateFormat("yyyyMMddHHmmss");
+        
+        return DateFor.format(date);
+    }
+    
     private void lblImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageMouseClicked
         int resultado;
 

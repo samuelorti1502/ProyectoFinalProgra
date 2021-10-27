@@ -10,6 +10,34 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+//PDF
+import com.itextpdf.kernel.pdf.*;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import java.io.*;
+import javax.swing.JOptionPane;
+
+//QR
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
+import com.itextpdf.layout.property.VerticalAlignment;
+import java.net.MalformedURLException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.Locale;
+
 /**
  *
  * @author Samuel David Ortiz
@@ -19,15 +47,20 @@ public class FrmEntrega extends javax.swing.JFrame {
     private int hora;
     private int minuto;
     private int segundo;
+    Date date = new Date();
 
     public FrmEntrega() {
         initComponents();
         this.txtHora.setText(hora());
 
-        Date date = new Date();
         SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
 
         this.txtFecha.setText(DateFor.format(date));
+
+        SimpleDateFormat DateFor2 = new SimpleDateFormat("yyyyMMddHHmmss.SS");
+        this.lblSolicitud1.setText("Solicitud No.");
+        this.lblSolicitud.setText(DateFor2.format(date));
+
     }
 
     /**
@@ -40,6 +73,8 @@ public class FrmEntrega extends javax.swing.JFrame {
     private void initComponents() {
 
         panelTitulo = new javax.swing.JPanel();
+        lblSolicitud = new javax.swing.JLabel();
+        lblSolicitud1 = new javax.swing.JLabel();
         panelContenido = new javax.swing.JPanel();
         panelSolicitante = new javax.swing.JPanel();
         imgSolicitante = new javax.swing.JLabel();
@@ -69,15 +104,29 @@ public class FrmEntrega extends javax.swing.JFrame {
 
         panelTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
+        lblSolicitud.setText("jLabel2");
+
+        lblSolicitud1.setText("jLabel2");
+
         javax.swing.GroupLayout panelTituloLayout = new javax.swing.GroupLayout(panelTitulo);
         panelTitulo.setLayout(panelTituloLayout);
         panelTituloLayout.setHorizontalGroup(
             panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(panelTituloLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSolicitud1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelTituloLayout.setVerticalGroup(
             panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTituloLayout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(lblSolicitud1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSolicitud)
+                .addContainerGap())
         );
 
         panelSolicitante.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -229,6 +278,11 @@ public class FrmEntrega extends javax.swing.JFrame {
         );
 
         jButton1.setText("Entregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -313,13 +367,61 @@ public class FrmEntrega extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Locale locale = new Locale("es", "ES");
+        
+        String DEST = "formulario " + this.lblSolicitud.getText() + ".pdf";
+        SimpleDateFormat DateFor = new SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss");
+
+        try {
+            PdfDocument pdf = new PdfDocument(new PdfWriter(DEST));
+            Document doc = new Document(pdf);
+
+            Table table = new Table(UnitValue.createPercentArray(new float[]{1, 2}));
+            table.addCell(createImageCell("src/images/QR/" + this.lblSolicitud.getText() + ".png"));
+            table.addCell(createTextCell("Solicitud No. " + lblSolicitud.getText() + "\n Guatemala, " + DateFor.format(date)));
+
+            doc.add(table);
+
+            doc.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Imprimir error " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private static Cell createImageCell(String path) throws MalformedURLException {
+        Image img = new Image(ImageDataFactory.create(path));
+        img.setWidth(UnitValue.createPercentValue(100));
+        Cell cell = new Cell().add(img);
+        cell.setBorder(Border.NO_BORDER);
+        return cell;
+    }
+
+    private static Cell createTextCell(String text) {
+        Cell cell = new Cell();
+        Paragraph p = new Paragraph(text);
+        p.setTextAlignment(TextAlignment.RIGHT);
+        cell.add(p).setVerticalAlignment(VerticalAlignment.BOTTOM);
+        cell.setBorder(Border.NO_BORDER);
+        return cell;
+    }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
         new FrmMenu().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            String codigo = this.lblSolicitud.getText();
+            QRCodeWriter qrCode = new QRCodeWriter();
+            BitMatrix bqr = qrCode.encode(codigo, BarcodeFormat.QR_CODE.QR_CODE, 200, 200);
+            Path pQr = FileSystems.getDefault().getPath("src/images/QR/" + codigo + ".png");
+            MatrixToImageWriter.writeToPath(bqr, "PNG", pQr);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error " + e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public String hora() {
         Calendar calendario = Calendar.getInstance();
@@ -377,15 +479,15 @@ public class FrmEntrega extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JLabel lblSolicitud;
+    private javax.swing.JLabel lblSolicitud1;
     private javax.swing.JPanel panelBici;
     private javax.swing.JPanel panelContenido;
     private javax.swing.JPanel panelSolicitante;
