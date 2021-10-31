@@ -186,16 +186,16 @@ public class FrmLogin extends javax.swing.JFrame {
 
         if (login) {
             this.dispose();
-            new FrmMenu().setVisible(true);
+            new FrmMenu(usuario.getNombres()).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Intente de nuevo");
         }
 
         this.setUsuario(usuarioTxt.getText());
-
-
+        
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
@@ -232,7 +232,7 @@ public class FrmLogin extends javax.swing.JFrame {
     }
 
     public String getUsuario() {
-        return usuario;
+        return this.usuario;
     }
 
     public void setUsuario(String usuario) {

@@ -5,7 +5,8 @@
  */
 package formularios;
 
-import java.text.DateFormat;
+import clases.EntregaClass;
+import clases.UsuarioClass;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,8 +36,15 @@ import com.itextpdf.layout.property.UnitValue;
 import com.itextpdf.layout.property.VerticalAlignment;
 import java.net.MalformedURLException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
+import java.util.Scanner;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -48,9 +56,11 @@ public class FrmEntrega extends javax.swing.JFrame {
     private int minuto;
     private int segundo;
     Date date = new Date();
+    File archivo;
 
-    public FrmEntrega() {
+    public FrmEntrega(String usuario) {
         initComponents();
+
         this.txtHora.setText(hora());
 
         SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
@@ -60,9 +70,28 @@ public class FrmEntrega extends javax.swing.JFrame {
         SimpleDateFormat DateFor2 = new SimpleDateFormat("yyyyMMddHHmmss.SS");
         this.lblSolicitud1.setText("Solicitud No.");
         this.lblSolicitud.setText(DateFor2.format(date));
-
+        
+        this.lblSolicitud3.setText(usuario);
+        
+        archivos();
+    }
+    
+    public void usuario(String usuario){
+        System.out.println("Usuario: " + usuario);
     }
 
+    public void archivos(){
+        try {
+            Path path = Paths.get("formularios");
+            Files.createDirectories(path);
+            
+            Path path2 = Paths.get("images/QR");
+            Files.createDirectories(path2);
+        } catch (Exception e) {
+        }
+    }
+            
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,6 +104,8 @@ public class FrmEntrega extends javax.swing.JFrame {
         panelTitulo = new javax.swing.JPanel();
         lblSolicitud = new javax.swing.JLabel();
         lblSolicitud1 = new javax.swing.JLabel();
+        lblSolicitud2 = new javax.swing.JLabel();
+        lblSolicitud3 = new javax.swing.JLabel();
         panelContenido = new javax.swing.JPanel();
         panelSolicitante = new javax.swing.JPanel();
         imgSolicitante = new javax.swing.JLabel();
@@ -99,14 +130,19 @@ public class FrmEntrega extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panelTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        panelTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         lblSolicitud.setText("jLabel2");
 
         lblSolicitud1.setText("jLabel2");
+
+        lblSolicitud2.setText("jLabel2");
+
+        lblSolicitud3.setText("jLabel2");
 
         javax.swing.GroupLayout panelTituloLayout = new javax.swing.GroupLayout(panelTitulo);
         panelTitulo.setLayout(panelTituloLayout);
@@ -117,15 +153,24 @@ public class FrmEntrega extends javax.swing.JFrame {
                 .addGroup(panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSolicitud1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSolicitud3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSolicitud2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         panelTituloLayout.setVerticalGroup(
             panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTituloLayout.createSequentialGroup()
+            .addGroup(panelTituloLayout.createSequentialGroup()
                 .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(lblSolicitud1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSolicitud)
+                .addGroup(panelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTituloLayout.createSequentialGroup()
+                        .addComponent(lblSolicitud1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblSolicitud))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTituloLayout.createSequentialGroup()
+                        .addComponent(lblSolicitud2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblSolicitud3)))
                 .addContainerGap())
         );
 
@@ -136,6 +181,11 @@ public class FrmEntrega extends javax.swing.JFrame {
         imgSolicitante.setMaximumSize(new java.awt.Dimension(150, 170));
         imgSolicitante.setMinimumSize(new java.awt.Dimension(150, 170));
         imgSolicitante.setPreferredSize(new java.awt.Dimension(150, 170));
+        imgSolicitante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgSolicitanteMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelSolicitanteLayout = new javax.swing.GroupLayout(panelSolicitante);
         panelSolicitante.setLayout(panelSolicitanteLayout);
@@ -236,7 +286,11 @@ public class FrmEntrega extends javax.swing.JFrame {
 
         jLabel6.setText("Marca");
 
+        txtMarcaBici.setEditable(false);
+
         jLabel7.setText("Modelo");
+
+        txtModeloBici.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -298,6 +352,13 @@ public class FrmEntrega extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Buscar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelContenidoLayout = new javax.swing.GroupLayout(panelContenido);
         panelContenido.setLayout(panelContenidoLayout);
         panelContenidoLayout.setHorizontalGroup(
@@ -316,7 +377,9 @@ public class FrmEntrega extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(panelBici, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelBici, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
                 .addGap(10, 10, 10))
         );
         panelContenidoLayout.setVerticalGroup(
@@ -327,8 +390,13 @@ public class FrmEntrega extends javax.swing.JFrame {
                     .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                         .addComponent(panelBici, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelContenidoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelContenidoLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -369,18 +437,51 @@ public class FrmEntrega extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Locale locale = new Locale("es", "ES");
         
-        String DEST = "formulario " + this.lblSolicitud.getText() + ".pdf";
+        String DEST = "Entrega " + this.lblSolicitud.getText() + ".pdf";
         SimpleDateFormat DateFor = new SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss");
 
         try {
-            PdfDocument pdf = new PdfDocument(new PdfWriter(DEST));
-            Document doc = new Document(pdf);
+            PdfDocument pdf = new PdfDocument(new PdfWriter("formularios/"+DEST));
+            Document doc = new Document(pdf, new PageSize(612,396));
+            doc.setMargins(2,20,20,20);
 
             Table table = new Table(UnitValue.createPercentArray(new float[]{1, 2}));
-            table.addCell(createImageCell("src/images/QR/" + this.lblSolicitud.getText() + ".png"));
+            table.addCell(createImageCell("images/QR/" + this.lblSolicitud.getText() + ".png"));
             table.addCell(createTextCell("Solicitud No. " + lblSolicitud.getText() + "\n Guatemala, " + DateFor.format(date)));
-
+            
+            Table table2 = new Table(UnitValue.createPercentArray(2));
+            
+            for (int i = 0; i < 2; i++) {
+                table2.addCell(createTextCell(" "));
+            }
+            
+            Image img1 = new Image(ImageDataFactory.create("images/QR/" + this.lblSolicitud.getText() + ".png"));
+            
+            img1.setAutoScale(true);
+            
+            //table2.addCell(img1);
+            table2.addCell(createTextCell("Nombres solicitante: "));
+            table2.addCell(createTextCell(this.txtNombres.getText()));
+            table2.addCell(createTextCell("Apellidos solicitante: "));
+            table2.addCell(createTextCell(this.txtApellidos.getText()));
+            //table2.addCell(createImageCell("images/QR/" + this.lblSolicitud.getText() + ".png"));
+            table2.addCell(createTextCell("Bicicleta: "));
+            table2.addCell(createTextCell(this.txtMarcaBici.getText() + " " + this.txtModeloBici.getText()));
+            
+            for (int i = 0; i < 4; i++) {
+                table2.addCell(createTextCell(" "));
+            }
+            
+            Table table3 = new Table(UnitValue.createPercentArray(4));
+            table3.addCell(createTextCell("Firma solicitante: "));
+            table3.addCell(createTextCell("___________________"));
+            table3.addCell(createTextCell("Firma encargado: "));
+            table3.addCell(createTextCell("___________________"));
+            
+            
             doc.add(table);
+            doc.add(table2);
+            doc.add(table3);
 
             doc.close();
 
@@ -408,7 +509,7 @@ public class FrmEntrega extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
-        new FrmMenu().setVisible(true);
+        //new FrmMenu().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -416,12 +517,67 @@ public class FrmEntrega extends javax.swing.JFrame {
             String codigo = this.lblSolicitud.getText();
             QRCodeWriter qrCode = new QRCodeWriter();
             BitMatrix bqr = qrCode.encode(codigo, BarcodeFormat.QR_CODE.QR_CODE, 200, 200);
-            Path pQr = FileSystems.getDefault().getPath("src/images/QR/" + codigo + ".png");
+            Path pQr = FileSystems.getDefault().getPath("images/QR/" + codigo + ".png");
             MatrixToImageWriter.writeToPath(bqr, "PNG", pQr);
+            
+            EntregaClass entregaClass = new EntregaClass(this.lblSolicitud.getText(), this.txtFecha.getText(), this.txtHora.getText(), this.txtNombres.getText(),
+                this.txtApellidos.getText(), this.txtCodBici.getText(), this.txtMarcaBici.getText(), this.txtModeloBici.getText());
+            
+            entregaClass.entrega();
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String[] u;
+
+        try {
+            File myObj = new File("bicicletas.txt");
+            Scanner myReader = new Scanner(myObj);
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                u = data.split(",");
+                
+                if(u[0].equals(this.txtCodBici.getText())){
+                    this.txtMarcaBici.setText(u[1]);
+                    this.txtModeloBici.setText(u[2]);
+                }/*else{
+                    JOptionPane.showMessageDialog(null, "El codigo de bicicleta no se encuentra intente introducionedo otro");
+                }*/
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void imgSolicitanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgSolicitanteMouseClicked
+        int resultado;
+
+        FrmImagen buscador = new FrmImagen();
+        FileNameExtensionFilter formato = new FileNameExtensionFilter("Archivos de imagen", "jpg", "png", "gif");
+
+        buscador.jFileChooser.setFileFilter(formato);
+        resultado = buscador.jFileChooser.showOpenDialog(null);
+
+        if (JFileChooser.APPROVE_OPTION == resultado) {
+            this.archivo = buscador.jFileChooser.getSelectedFile();
+
+            try {
+                ImageIcon Img = new ImageIcon(this.archivo.toString());
+
+                Icon icono = new ImageIcon(Img.getImage().getScaledInstance(this.imgSolicitante.getWidth(), this.imgSolicitante.getHeight(),
+                        java.awt.Image.SCALE_DEFAULT));
+                this.imgSolicitante.setIcon(icono);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error al abrir " + ex);
+            }
+        }
+    }//GEN-LAST:event_imgSolicitanteMouseClicked
 
     public String hora() {
         Calendar calendario = Calendar.getInstance();
@@ -466,7 +622,7 @@ public class FrmEntrega extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmEntrega().setVisible(true);
+                //new FrmEntrega().setVisible(true);
             }
         });
     }
@@ -476,6 +632,7 @@ public class FrmEntrega extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -488,6 +645,8 @@ public class FrmEntrega extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel lblSolicitud;
     private javax.swing.JLabel lblSolicitud1;
+    private javax.swing.JLabel lblSolicitud2;
+    private javax.swing.JLabel lblSolicitud3;
     private javax.swing.JPanel panelBici;
     private javax.swing.JPanel panelContenido;
     private javax.swing.JPanel panelSolicitante;

@@ -18,12 +18,24 @@ public class FrmMenu extends javax.swing.JFrame {
 
     private ImageIcon Img;
     private Icon icono;
+    private String usuario;
     
-    public FrmMenu() {
+    public FrmMenu(){
         initComponents();
         paintimages("bici", jButton1);
         paintimages("bici1", jButton2);
         paintimages("bici2", jButton3);
+    }
+    
+    public FrmMenu(String usuario) {
+        this.usuario = usuario;
+        
+        initComponents();
+        paintimages("bici", jButton1);
+        paintimages("bici1", jButton2);
+        paintimages("bici2", jButton3);
+        
+        System.out.println("usuario = " + usuario);
     }
     
     public void paintimages(String image, JButton boton){
@@ -149,7 +161,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        new FrmEntrega().setVisible(true);
+        new FrmEntrega(this.usuario).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -182,7 +194,7 @@ public class FrmMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmMenu().setVisible(true);
+                //new FrmMenu().setVisible(true);
             }
         });
     }

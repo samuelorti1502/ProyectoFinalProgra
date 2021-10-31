@@ -22,6 +22,8 @@ import javax.swing.JOptionPane;
 public class UsuarioClass {
     private String usuario;
     private String codigo;
+    private String nombres;
+    private String apellidos;
     private String contraseña1;
     private String contraseña2;
     private String DPI;
@@ -82,15 +84,9 @@ public class UsuarioClass {
                 String data = myReader.nextLine();
                 u = data.split(",");
                 
-                /*JOptionPane.showMessageDialog(null, "usuario archivo = " + u[4]);
-                JOptionPane.showMessageDialog(null, "usuario form = " + claveMurci(usuario));
-                JOptionPane.showMessageDialog(null, "clave archivo = " + u[6]);
-                JOptionPane.showMessageDialog(null, "clave form = " + claveMurci(contraseña));*/
-                
                 if(u[4].equals(claveMurci(usuario)) && u[6].equals(claveMurci(contraseña))){
                     isLogin = true;
-                    //FrmJuego juego = new FrmJuego();
-                    //JOptionPane.showMessageDialog(null, "A jugar");
+                    this.setNombres(u[2] + " " + u[3]);
                 }
             }
             myReader.close();
@@ -140,6 +136,34 @@ public class UsuarioClass {
 
     public void setDPI(String DPI) {
         this.DPI = DPI;
+    }
+
+    /**
+     * @return the nombres
+     */
+    public String getNombres() {
+        return nombres;
+    }
+
+    /**
+     * @param nombres the nombres to set
+     */
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    /**
+     * @return the apellidos
+     */
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    /**
+     * @param apellidos the apellidos to set
+     */
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
     
     

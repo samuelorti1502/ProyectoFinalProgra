@@ -220,12 +220,14 @@ public class FrmBici extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.dispose();
         try {
             Files.delete(pathDestino);
             this.dispose();
         } catch (IOException ex) {
             Logger.getLogger(FrmBici.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void lblImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenMouseClicked
@@ -243,7 +245,7 @@ public class FrmBici extends javax.swing.JFrame {
 
                 pathOrigen = Paths.get(rutaImagen.getAbsolutePath());
                 int indice = rutaImagen.getName().lastIndexOf(".");
-                pathDestino = Paths.get("src\\images\\bici\\" + this.txtCod.getText() + rutaImagen.getName().substring(indice));
+                pathDestino = Paths.get("images/bici/" + this.txtCod.getText() + rutaImagen.getName().substring(indice));
                 Files.copy(pathOrigen, pathDestino, StandardCopyOption.REPLACE_EXISTING);
 
                 BufferedImage bImagen = ImageIO.read(pathDestino.toFile());
