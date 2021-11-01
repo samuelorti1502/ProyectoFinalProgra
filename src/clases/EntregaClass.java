@@ -20,8 +20,10 @@ public class EntregaClass {
     private String codBici;
     private String marca;
     private String modelo;
+    private String usuario;
 
-    public EntregaClass(String solicitud, String fecha, String hora, String nombres, String apellidos, String codBici, String marca, String modelo) {
+    public EntregaClass(String solicitud, String fecha, String hora, String nombres, String apellidos, 
+            String codBici, String marca, String modelo, String usuario) {
         this.solicitud = solicitud;
         this.fecha = fecha;
         this.hora = hora;
@@ -30,6 +32,7 @@ public class EntregaClass {
         this.codBici = codBici;
         this.marca = marca;
         this.modelo = modelo;
+        this.usuario = usuario;
     }
     
     public void entrega() {
@@ -39,7 +42,7 @@ public class EntregaClass {
             FileWriter archivo = new FileWriter(file.getAbsoluteFile(), true);
 
             String texto =  this.getSolicitud() + "," + this.getFecha() + "," + this.getHora() + "," + this.getNombres() + "," + this.getApellidos()
-                    + "," + this.getCodBici() + "," + this.getMarca() + "," + this.getModelo();
+                    + "," + this.getCodBici() + "," + this.getMarca() + "," + this.getModelo()  + "," + this.getUsuario();
 
             PrintWriter imprimir = new PrintWriter(archivo);
             imprimir.println(texto);
@@ -119,6 +122,20 @@ public class EntregaClass {
      */
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public String getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     /**

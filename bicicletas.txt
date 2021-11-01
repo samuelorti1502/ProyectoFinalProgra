@@ -6,3 +6,4 @@
 5,Trek,Fuel
 55,Yamaha,Mura
 88,Trek,Fuel Plus
+8547,Shimano,Optimus,8547.jpeg

@@ -6,6 +6,7 @@
 package formularios;
 
 import clases.BiciClass;
+import clases.PDFClass;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Image;
@@ -35,6 +36,7 @@ public class FrmBici extends javax.swing.JFrame {
      * Creates new form FrmBici2
      */
     Path pathOrigen, pathDestino;
+    private String rutaImagen;
 
     public FrmBici() {
         initComponents();
@@ -68,11 +70,12 @@ public class FrmBici extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panelTitulo.setLayout(new java.awt.GridLayout());
+        panelTitulo.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -186,7 +189,16 @@ public class FrmBici extends javax.swing.JFrame {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("File");
+        jMenu1.setText("Archivo");
+
+        jMenuItem1.setText("Reportes");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -232,7 +244,7 @@ public class FrmBici extends javax.swing.JFrame {
 
     private void lblImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenMouseClicked
         JFileChooser jFileChooser = new JFileChooser();
-        FileNameExtensionFilter formato = new FileNameExtensionFilter("Archivos de imagen", "jpg", "png", "gif");
+        FileNameExtensionFilter formato = new FileNameExtensionFilter("Archivos de imagen", "jpg", "jpeg", "png", "gif");
 
         jFileChooser.setFileFilter(formato);
 
@@ -245,7 +257,10 @@ public class FrmBici extends javax.swing.JFrame {
 
                 pathOrigen = Paths.get(rutaImagen.getAbsolutePath());
                 int indice = rutaImagen.getName().lastIndexOf(".");
-                pathDestino = Paths.get("images/bici/" + this.txtCod.getText() + rutaImagen.getName().substring(indice));
+                
+                this.setRutaImagen(this.txtCod.getText() + rutaImagen.getName().substring(indice));
+                
+                pathDestino = Paths.get("images/bici/" + this.getRutaImagen());
                 Files.copy(pathOrigen, pathDestino, StandardCopyOption.REPLACE_EXISTING);
 
                 BufferedImage bImagen = ImageIO.read(pathDestino.toFile());
@@ -262,7 +277,7 @@ public class FrmBici extends javax.swing.JFrame {
     }//GEN-LAST:event_lblImagenMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        BiciClass biciClass = new BiciClass(Integer.valueOf(this.txtCod.getText()), this.txtMarca.getText(), this.txtModelo.getText());
+        BiciClass biciClass = new BiciClass(Integer.valueOf(this.txtCod.getText()), this.txtMarca.getText(), this.txtModelo.getText(), this.getRutaImagen());
 
         biciClass.nuevaBici();
 
@@ -277,6 +292,25 @@ public class FrmBici extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        PDFClass pdfClass = new PDFClass("ReporteB", 3);
+        pdfClass.reportes();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    /**
+     * @return the rutaImagen
+     */
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    /**
+     * @param rutaImagen the rutaImagen to set
+     */
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
+    }
 
     /**
      * @param args the command line arguments
@@ -326,6 +360,7 @@ public class FrmBici extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JPanel panelBotones;

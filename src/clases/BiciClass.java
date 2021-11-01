@@ -15,11 +15,13 @@ public class BiciClass {
     private int codigoBici;
     private String Marca;
     private String Modelo;
+    private String ruta;
 
-    public BiciClass(int codigoBici, String Marca, String Modelo) {
+    public BiciClass(int codigoBici, String Marca, String Modelo, String ruta) {
         this.codigoBici = codigoBici;
         this.Marca = Marca;
         this.Modelo = Modelo;
+        this.ruta = ruta;
     }
     
     public void nuevaBici(){
@@ -28,7 +30,7 @@ public class BiciClass {
 
             FileWriter archivo = new FileWriter(file.getAbsoluteFile(), true);
 
-            String texto =  getCodigoBici() + "," + getMarca() + "," + getModelo();
+            String texto =  getCodigoBici() + "," + getMarca() + "," + getModelo() + "," + getRuta();
 
             PrintWriter imprimir = new PrintWriter(archivo);
             imprimir.println(texto);
@@ -62,6 +64,20 @@ public class BiciClass {
 
     public void setModelo(String Modelo) {
         this.Modelo = Modelo;
+    }
+
+    /**
+     * @return the ruta
+     */
+    public String getRuta() {
+        return ruta;
+    }
+
+    /**
+     * @param ruta the ruta to set
+     */
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
     
     
