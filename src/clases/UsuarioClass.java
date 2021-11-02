@@ -87,6 +87,7 @@ public class UsuarioClass {
                 if(u[4].equals(claveMurci(usuario)) && u[6].equals(claveMurci(contraseña))){
                     isLogin = true;
                     this.setNombres(u[2] + " " + u[3]);
+                    System.out.println("data = " + this.getNombres());
                 }
             }
             myReader.close();

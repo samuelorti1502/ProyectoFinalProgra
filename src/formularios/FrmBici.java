@@ -295,7 +295,9 @@ public class FrmBici extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         PDFClass pdfClass = new PDFClass("ReporteB", 3);
-        pdfClass.reportes();
+        
+        String[] encabezado = {"Codigo", "Marca", "Modelo", "Imagen"};
+        pdfClass.reportes(encabezado);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**

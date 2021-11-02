@@ -13,9 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 //PDF
-import com.itextpdf.kernel.pdf.*;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
 import java.io.*;
 import javax.swing.JOptionPane;
 
@@ -24,17 +21,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.layout.borders.Border;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.UnitValue;
-import com.itextpdf.layout.property.VerticalAlignment;
 import java.net.MalformedURLException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -550,23 +536,6 @@ public class FrmEntrega extends javax.swing.JFrame {
         // </editor-fold>
     }//GEN-LAST:event_btnImprimirActionPerformed
 
-    private static Cell createImageCell(String path) throws MalformedURLException {
-        Image img = new Image(ImageDataFactory.create(path));
-        img.setWidth(UnitValue.createPercentValue(100));
-        Cell cell = new Cell().add(img);
-        cell.setBorder(Border.NO_BORDER);
-        return cell;
-    }
-
-    private static Cell createTextCell(String text) {
-        Cell cell = new Cell();
-        Paragraph p = new Paragraph(text);
-        p.setTextAlignment(TextAlignment.RIGHT);
-        cell.add(p).setVerticalAlignment(VerticalAlignment.BOTTOM);
-        cell.setBorder(Border.NO_BORDER);
-        return cell;
-    }
-
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
         new FrmMenu(this.lblUsuario.getText()).setVisible(true);
@@ -641,7 +610,8 @@ public class FrmEntrega extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         PDFClass pdfClass = new PDFClass("ReporteE", 4);
-        pdfClass.reportes();
+        String[] encabezado = {"No Solicitud", "Fecha", "Hora", "Nombres", "Apellidos", "Codigo", "Marca", "Modelo", "Usuario"};
+        pdfClass.reportes(encabezado);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public String hora() {

@@ -192,8 +192,6 @@ public class FrmLogin extends javax.swing.JFrame {
         }
 
         this.setUsuario(usuarioTxt.getText());
-        
-        
     }//GEN-LAST:event_btnAceptarActionPerformed
     
     /**

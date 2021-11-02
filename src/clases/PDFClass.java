@@ -2,28 +2,20 @@ package clases;
 
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.UnitValue;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.property.*;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;;
+import java.util.logging.*;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,7 +29,6 @@ public class PDFClass {
     private String lblNombre;
     private String lblApellido;
     private String lblFirma;
-    private String lblFirma2;
     private String ext;
     private String reporteRuta;
     private String reporte;
@@ -45,6 +36,7 @@ public class PDFClass {
     private String imagen;
     private int tipoR;
     private int columnas;
+    private float pointColumnWidths[];
     Date date = new Date();
 
     public PDFClass(String modulo, int tipo) {
@@ -54,6 +46,8 @@ public class PDFClass {
     }
 
     public void tipoSD(int tipo) {
+        SimpleDateFormat DateFor = new SimpleDateFormat("yyyyMMddHHmm");
+
         switch (tipo) {
             case 1: //Entrega
                 this.lblNombre = "Nombres solicitante: ";
@@ -69,19 +63,46 @@ public class PDFClass {
                 break;
             case 3: //ReporteBici
                 this.tipoR = 1;
-                this.reporteRuta = "Bicicletas/ReporteB.pdf";
+                this.reporteRuta = "Bicicletas/ReporteB" + DateFor.format(date) + ".pdf";
                 this.reporte = "bicicletas";
                 this.archivoReporte = "bicicletas.txt";
                 this.imagen = "bici.png";
-                this.columnas = 3;
+                this.columnas = 4;
+                this.pointColumnWidths = new float[columnas];
+
+                for (int i = 0; i < this.columnas; i++) {
+                    this.pointColumnWidths[i] = 150F;
+                    System.out.println(this.pointColumnWidths[i]);
+                }
+
                 break;
-            case 4: //ReporteBici
+            case 4: //ReporteEntregas
                 this.tipoR = 2;
-                this.reporteRuta = "Entradas/ReporteE.pdf";
-                this.reporte = "entradas";
+                this.reporteRuta = "Entregas/ReporteE" + DateFor.format(date) + ".pdf";
+                this.reporte = "entregas";
                 this.archivoReporte = "control_entregas.txt";
                 this.imagen = "bici1.png";
                 this.columnas = 9;
+                this.pointColumnWidths = new float[columnas];
+
+                for (int i = 0; i < this.columnas; i++) {
+                    this.pointColumnWidths[i] = 150F;
+                }
+
+                break;
+            case 5: //ReporteDevoluciones
+                this.tipoR = 2;
+                this.reporteRuta = "Devoluciones/ReporteD" + DateFor.format(date) + ".pdf";
+                this.reporte = "devoluciones";
+                this.archivoReporte = "control_devoluciones.txt";
+                this.imagen = "bici2.png";
+                this.columnas = 7;
+                this.pointColumnWidths = new float[columnas];
+
+                for (int i = 0; i < this.columnas; i++) {
+                    this.pointColumnWidths[i] = 150F;
+                }
+
                 break;
         }
     }
@@ -107,14 +128,10 @@ public class PDFClass {
                 table2.addCell(createTextCell(" "));
             }
 
-            /*Image img1 = new Image(ImageDataFactory.create("images/QR/" + numero + ".png"));
-            img1.setAutoScale(true);
-            table2.addCell(img1);*/
             table2.addCell(createTextCell(this.lblNombre));
             table2.addCell(createTextCell(nombres));
             table2.addCell(createTextCell(this.lblApellido));
             table2.addCell(createTextCell(apellidos));
-            //table2.addCell(createImageCell("images/QR/" + this.lblSolicitud.getText() + ".png"));
             table2.addCell(createTextCell("Bicicleta: "));
             table2.addCell(createTextCell(marca + " " + modelo));
 
@@ -149,17 +166,15 @@ public class PDFClass {
 
     }
 
-    public void reportes() {
+    public void reportes(String[] encabezado) {
+        System.out.println("Columnas " + this.pointColumnWidths);
         String[] u;
-
-        String[] encabezadoB = {"Codigo", "Marca", "Modelo"};
-        String[] encabezadoE = {"No Solicitud", "Fecha", "Hora", "Nombre", "Apellido", "Codigo", "Marca", "Modelo", "Usuario"};
 
         SimpleDateFormat DateFor = new SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss");
 
         try {
             PdfDocument pdf = new PdfDocument(new PdfWriter("reportes/" + this.reporteRuta));
-            Document doc = new Document(pdf);
+            Document doc = new Document(pdf, PageSize.A4.rotate());
             doc.setMargins(2, 20, 20, 20);
 
             Table tablaTitulo = new Table(UnitValue.createPercentArray(new float[]{1, 2}));
@@ -170,36 +185,10 @@ public class PDFClass {
                 tablaTitulo.addCell(createTextCell(" "));
             }
 
-            float[] pointColumnWidths = {150F, 150F, 150F};
-            Table table = new Table(pointColumnWidths);
+            Table table = new Table(this.pointColumnWidths);
 
-            //Tipo Reporte
-            // Adding cells to the table       
-            /*table.addCell(createTextCell("Codigo"));
-            table.addCell(createTextCell("Marca"));
-            table.addCell(createTextCell("Modelo"));*/
-            File myObj = new File(this.archivoReporte);
-            Scanner myReader = new Scanner(myObj);
-
-            switch (tipoR) {
-                case 1:
-                    this.tablaTipoReporte(table, encabezadoB);
-                    break;
-                case 2:
-                    this.tablaTipoReporte(table, encabezadoE);
-                    break;
-            }
-
-            /*while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                u = data.split(",");
-
-                table.addCell(createTextCell(u[0]));
-                table.addCell(createTextCell(u[1]));
-                table.addCell(createTextCell(u[2]));
-            }*/
-            //Tipo Reporte
-            // Adding Table to document        
+            this.tablaTipoReporte(table, encabezado);
+            
             doc.add(tablaTitulo);
             doc.add(table);
 
@@ -211,7 +200,7 @@ public class PDFClass {
 
         if (Desktop.isDesktopSupported()) {
             try {
-                File myFile = new File("reportes/" + this.reporte);
+                File myFile = new File("reportes/" + this.reporteRuta);
                 Desktop.getDesktop().open(myFile);
             } catch (IOException ex) {
                 // no application registered for PDFs
@@ -226,23 +215,16 @@ public class PDFClass {
                 table.addCell(createTextCell(encabezado[i]));
             }
 
-            /*table.addCell(createTextCell("Marca"));
-            table.addCell(createTextCell("Modelo"));*/
             File myObj = new File(this.archivoReporte);
             Scanner myReader = new Scanner(myObj);
 
-            /*for (int i = 0; i < u.length; i++) {
-                String data = myReader.nextLine();
-                u = data.split(",");
-                table.addCell(createTextCell(u[0]));
-            }*/
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 u = data.split(",");
 
-                table.addCell(createTextCell(u[0]));
-                table.addCell(createTextCell(u[1]));
-                table.addCell(createTextCell(u[2]));
+                for (int i = 0; i < u.length; i++) {
+                    table.addCell(createTextCell(u[i]));
+                }
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(PDFClass.class.getName()).log(Level.SEVERE, null, ex);

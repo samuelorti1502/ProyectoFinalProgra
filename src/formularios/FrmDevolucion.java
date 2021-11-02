@@ -12,29 +12,12 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.borders.Border;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.UnitValue;
-import com.itextpdf.layout.property.VerticalAlignment;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -109,6 +92,10 @@ public class FrmDevolucion extends javax.swing.JFrame {
         btnImprimir = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         btnCancel1 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(435, 637));
@@ -408,6 +395,23 @@ public class FrmDevolucion extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 5, 5, 15);
         pnlBotones.add(btnCancel1, gridBagConstraints);
 
+        jMenu1.setText("Archivo");
+
+        jMenuItem1.setText("Reporte");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -437,7 +441,7 @@ public class FrmDevolucion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlBici, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                .addComponent(pnlBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -454,7 +458,7 @@ public class FrmDevolucion extends javax.swing.JFrame {
             Path pQr = FileSystems.getDefault().getPath("images/QR/" + codigo + "D.png");
             MatrixToImageWriter.writeToPath(bqr, "PNG", pQr);
 
-            DevolClass devolClass = new DevolClass(this.txtSolicitud.getText(), this.txtFecha.getText(), this.txtHora.getText(), this.txtNombresD.getText(),
+            DevolClass devolClass = new DevolClass(this.lblDevol2.getText(), this.txtFecha.getText(), this.txtHora.getText(), this.txtNombresD.getText(),
                     this.txtApellidosD.getText(), this.txtCodBici.getText(), this.lblUsuario.getText());
 
             devolClass.devolucion();
@@ -529,14 +533,11 @@ public class FrmDevolucion extends javax.swing.JFrame {
                 this.txtModeloBici.getText());
     }//GEN-LAST:event_btnImprimirActionPerformed
 
-    private static Cell createTextCell(String text) {
-        Cell cell = new Cell();
-        Paragraph p = new Paragraph(text);
-        p.setTextAlignment(TextAlignment.RIGHT);
-        cell.add(p).setVerticalAlignment(VerticalAlignment.BOTTOM);
-        cell.setBorder(Border.NO_BORDER);
-        return cell;
-    }
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        PDFClass pdfClass = new PDFClass("ReporteD", 5);
+        String[] encabezado = {"No Solicitud", "Fecha", "Hora", "Nombres", "Apellidos", "Codigo", "Usuario"};
+        pdfClass.reportes(encabezado);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -580,6 +581,10 @@ public class FrmDevolucion extends javax.swing.JFrame {
     private javax.swing.JButton btnRecibir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel lblApellidosD;
     private javax.swing.JLabel lblCodigoB;
     private javax.swing.JLabel lblDevol1;

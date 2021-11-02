@@ -1,10 +1,3 @@
-30/10/2021,22:08:30,Samuel,Ortiz,5,Trek,Fuel
-20211030221315.388,30/10/2021,22:13:15,Juan,Perez,1,BMX,BMX
-20211101103006.937,01/11/2021,10:30:07,Juan,Perez,5,Trek,Fuel,20211101103006.937
-20211101130206.183,01/11/2021,13:02:06,Samuel,Ortiz,5,Trek,Fuel,Samuel Ortiz
-20211101132048.304,01/11/2021,13:20:48,Juan Manuel,Perez Perez,8547,Shimano,Optimus,Samuel Ortiz
-20211101132155.725,01/11/2021,13:21:55,Juan Manuel,Perez Sosa,8547,Shimano,Optimus,Samuel Ortiz
-20211101132653.659,01/11/2021,13:26:53,Juan Manuel,Perez,8547,Shimano,Optimus,Samuel Ortiz
 20211101133529.749,01/11/2021,13:35:29,Juan Juan,Perez Perez,5,Trek,Fuel,Samuel Ortiz
 20211101133618.391,01/11/2021,13:36:18,Juan Juan,Perez Sosa,8547,Shimano,Optimus,Samuel Ortiz
 20211101134357.185,01/11/2021,13:43:57,Samuel Saul,Perez Monzon,8547,Shimano,Optimus,Samuel Ortiz
@@ -12,3 +5,4 @@
 20211101134558.670,01/11/2021,13:45:58,mmm,bbb,8547,Shimano,Optimus,Samuel Ortiz
 20211101135209.717,01/11/2021,13:52:09,qqqq,wwww,5,Trek,Fuel,Samuel Ortiz
 20211101135505.109,01/11/2021,13:55:05,Sam,Or,1,BMX,BMX,Samuel Ortiz
+20211102005255.171,02/11/2021,00:52:55,Willy,Marroquin,5,Trek,Fuel,Samuel Ortiz
